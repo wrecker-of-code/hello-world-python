@@ -2,52 +2,45 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{build.name}}
-  {%- if "endpoint" in build.profile %}
-  annotations:
-    getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v0
-      kind: Mapping
-      name: {{build.name}}-mapping
-      prefix: {{build.profile.endpoint}}
-      service: {{build.name}}
-      {%- if "weight" in build.profile %}
-      weight: {{build.profile.weight}}
-      {%- endif %}
-  {%- endif %}
+  name: hello-world-service
 spec:
   selector:
-    app: {{build.name}}
+    app: hello-world
   ports:
     - port: 80
       targetPort: http-api
-  type: ClusterIP
+  type: LoadBalancer
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{build.name}}
+  name: hello-world-deployment
+  labels:
+    app: hello-world
 spec:
   replicas: 1
   strategy:
     type: RollingUpdate
   template:
     metadata:
+      name: hello-world
       labels:
-        app: {{build.name}}
+        app: hello-world
     spec:
       containers:
-      - name: {{build.name}}
-        image: {{build.images["Dockerfile"]}}
+      - name: hello-world
+        image: piiv5wkacr.azurecr.io/hello-world-python:latest
         imagePullPolicy: Always
         resources:
           requests:
             memory: 0.1G
             cpu: 0.1
           limits:
-            memory: {{build.profile.max_memory}}
-            cpu: {{build.profile.max_cpu}}
+            memory: 0.5G
+            cpu: 0.5
         ports:
         - name: http-api
           containerPort: 8080
+  selector:
+    matchLabels:
+      app: hello-world
