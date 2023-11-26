@@ -7,9 +7,9 @@ This is a Python/Flask template for building a microservice in Kubernetes and Do
 The main files in this repository are:
 
 * `Dockerfile` specifies how the application is built and packaged
-* `k8s/deployment.yaml` contains a templated Kubernetes manifest, with additional annotations for configuring Ambassador
-* `service.yaml` contains values (typically configured by a developer) that will be instantiated into the Kubernetes manifest
+* `k8s/deployment.yaml` contains a templated Kubernetes manifest for the application
 * `app.py` is the actual Python/Flask application
+* `scripts/` contains scripts for building and deploying the application
 
 # License
 

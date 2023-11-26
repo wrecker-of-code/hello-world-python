@@ -15,7 +15,7 @@ echo ""
 echo ""
 kubectl get nodes
 echo ""
-kubectl create -f ./k8s/deployment.yaml
+kubectl create -f ../k8s/deployment.yaml
 
 echo ""
 echo "Waiting for pods to start..."

@@ -23,6 +23,7 @@ echo ""
 echo "Building and Pushing docker image $IMAGE_NAME1 to private ACR $REGISTRY_NAME ..."
 echo ""
 
+cd ..
 docker build -t $REGISTRY_NAME.azurecr.io/$IMAGE_NAME1:latest .
 echo ""
 docker push $REGISTRY_NAME.azurecr.io/$IMAGE_NAME1:latest
